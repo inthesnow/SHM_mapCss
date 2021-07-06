@@ -1,0 +1,36 @@
+/*login*/
+
+.form-login {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    
+}
+
+.btn-block {
+    background-color:cornflowerblue;
+    border: 1px solid cornflowerblue; 
+    margin-top: 50px;
+}
+.btn-block:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid white;
+}
+.sub {
+    margin-top: 108px;
+    text-align: center;
+    margin-bottom: 120px;
+}
+@media (max-width:992px) {
+    .sub{
+
+    padding-top: 30px;
+    }
+    
+}
+
+.login-body {
+    height: 720px;
+    margin-top: 80px;
+}
+
