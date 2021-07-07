@@ -191,9 +191,9 @@
             <!-- 지도 js -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4306199893f86fa673fc035ff7b9639a"></script>
     <script>
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = { 
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                center: new kakao.maps.LatLng(37.497935, 127.027556), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
 
@@ -203,15 +203,15 @@
         var positions = [
                 {
                     title: 'list1', 
-                    latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+                    latlng: new kakao.maps.LatLng(37.499607, 127.030437)
                 },
                 {
                     title: 'list2', 
-                    latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+                    latlng: new kakao.maps.LatLng(37.498464, 127.028678)
                 },
                 {
                     title: 'list3', 
-                    latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+                    latlng: new kakao.maps.LatLng(37.497268, 127.027321)
                 },
             ];
             selectedMarker = null;
@@ -287,31 +287,40 @@
 
                     // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
                     marker.setImage(clickImage);
+                    getKickList(marker.Fb);
+                } else if(selectedMarker){
+                    //market.T = imageSrc
+                    if(marker.T==clickImage) {
+                        marker.setImage(normalImage);
+                    } else {
+                        marker.setImage(clickImage);
+                    }
+                    getKickList(marker.Fb);
                 }
 
                 // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
                 selectedMarker = marker;
-                getKickList(marker.Fb);
-                function getKickList(list){    
-                    
-                    var size = $("#kick-list").find("li").length;
-                    var i = list.substring(4, list.length);
+            });
+        }
 
-                    if($('#detail'+i).css("display") == "none"){   
-                        for(var j=1;j<=size;j++){
-                            if(i==j){
-                                jQuery('#detail'+j).slideDown(50);
-                            } else {
-                                jQuery('#detail'+j).slideUp(50);
-                            }
-                        }
+        function getKickList(list){         
+            //maker.Fb = list + i
+            var size = $("#kick-list").find("li").length;
+            var i = list.substring(4, list.length);
+
+            if($('#detail'+i).css("display") == "none"){   
+                for(var j=1;j<=size;j++){
+                    if(i==j){
+                        jQuery('#detail'+j).slideDown(50);
                     } else {
-                        jQuery('#detail'+i).slideUp(50);
+                        jQuery('#detail'+j).slideUp(50);
                     }
                 }
-            });
+            } else {
+                jQuery('#detail'+i).slideUp(50);
             }
-
+        }
+        
         function createMarkerImage(markerSize) {
             var markerImage = new kakao.maps.MarkerImage(
                 imageClick, // 스프라이트 마커 이미지 URL
