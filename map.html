@@ -236,12 +236,17 @@
             addMarker(positions[i], markerSize, overMarkerSize);
         
         }
+
+        // 기본 마커이미지, 오버 마커이미지, 클릭 마커이미지를 생성합니다  
+        var normalImage = overMarkerImage(markerSize),
+            overImage = overMarkerImage(overMarkerSize),
+            clickImage = createMarkerImage(markerSize);
+        //var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+
         function addMarker(position, markerSize, overMarkerSize) {
-            // 기본 마커이미지, 오버 마커이미지, 클릭 마커이미지를 생성합니다  
-            var normalImage = overMarkerImage(markerSize),
-                overImage = overMarkerImage(overMarkerSize),
-                clickImage = createMarkerImage(markerSize);
-            //var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+            normalImage = overMarkerImage(markerSize),
+            overImage = overMarkerImage(overMarkerSize),
+            clickImage = createMarkerImage(markerSize);
             
             // 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
             var marker = new kakao.maps.Marker({
@@ -276,48 +281,51 @@
 
             // 마커에 click 이벤트를 등록합니다
             kakao.maps.event.addListener(marker, 'click', function() {
-
-                // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
-                // 마커의 이미지를 클릭 이미지로 변경합니다
-                if (!selectedMarker || selectedMarker !== marker) {
-
-                    // 클릭된 마커 객체가 null이 아니면
-                    // 클릭된 마커의 이미지를 기본 이미지로 변경하고
-                    !!selectedMarker && selectedMarker.setImage(normalImage);
-
-                    // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
-                    marker.setImage(clickImage);
-                    getKickList(marker.Fb);
-                } else if(selectedMarker){
-                    //market.T = imageSrc
-                    if(marker.T==clickImage) {
-                        marker.setImage(normalImage);
-                    } else {
-                        marker.setImage(clickImage);
-                    }
-                    getKickList(marker.Fb);
-                }
-
-                // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-                selectedMarker = marker;
+                clickMark(marker);
+                getKickList(marker.Fb);
+                
             });
+        }
+        function clickMark(marker) {
+            // 클릭된 마커가 없고, click 마커가 클릭된 마커가 아니면
+            // 마커의 이미지를 클릭 이미지로 변경합니다
+            if (!selectedMarker || selectedMarker !== marker) {
+
+                // 클릭된 마커 객체가 null이 아니면
+                // 클릭된 마커의 이미지를 기본 이미지로 변경하고
+                !!selectedMarker && selectedMarker.setImage(normalImage);
+
+                // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
+                marker.setImage(clickImage);
+            } else if(selectedMarker){
+                //market.T = imageSrc
+                if(marker.T==clickImage) {
+                    marker.setImage(normalImage);
+                } else {
+                    marker.setImage(clickImage);
+                }
+                //getKickList(marker.Fb);
+            }
+
+                    // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+            selectedMarker = marker;
         }
 
         function getKickList(list){         
             //maker.Fb = list + i
             var size = $("#kick-list").find("li").length;
-            var i = list.substring(4, list.length);
+            var leng = list.substring(4, list.length);
 
-            if($('#detail'+i).css("display") == "none"){   
+            if($('#detail'+leng).css("display") == "none"){   
                 for(var j=1;j<=size;j++){
-                    if(i==j){
+                    if(leng==j){
                         jQuery('#detail'+j).slideDown(50);
                     } else {
                         jQuery('#detail'+j).slideUp(50);
                     }
                 }
             } else {
-                jQuery('#detail'+i).slideUp(50);
+                jQuery('#detail'+leng).slideUp(50);
             }
         }
         
@@ -337,6 +345,10 @@
             );
     
             return markerImage;
+        }
+
+        function checkLog() {
+            console.log("checkLog");
         }
     </script>
         <!-- 상품 리스트를 표시하는 div입니다. -->
@@ -467,23 +479,25 @@
             
     <script>
         $(document).ready(function(data) {
+            checkLog();
             var size = $("#kick-list").find("li").length;
-            var list = $("#kick-list").children().eq(0);
-            console.log(list);
+
             for(var i=1;i<=size;i++){
                 (function(i) {
                     $('#list'+i).click(function(){
-                        if($('#detail'+i).css("display") == "none"){   
-                            for(var j=1;j<=size;j++){
-                                if(i==j){
-                                    jQuery('#detail'+i).slideDown(50);
-                                } else {
-                                    jQuery('#detail'+j).slideUp(50);
-                                }
-                            }
-                        } else {
-                            jQuery('#detail'+i).slideUp(50);
-                        }
+                        getKickList("list"+i);
+                        
+                        // if($('#detail'+i).css("display") == "none"){   
+                        //     for(var j=1;j<=size;j++){
+                        //         if(i==j){
+                        //             jQuery('#detail'+i).slideDown(50);            
+                        //         } else {
+                        //             jQuery('#detail'+j).slideUp(50);
+                        //         }
+                        //     }
+                        // } else {
+                        //     jQuery('#detail'+i).slideUp(50);
+                        // }
                     });
                 })(i);
             }
