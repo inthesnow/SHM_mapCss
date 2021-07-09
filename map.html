@@ -7,163 +7,19 @@
      <link rel="stylesheet" href="css/bootstrap.css">
      <!-- 부트스트랩 js를 사용하기 위해서 jquery라이브러리 참조 -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- 
+     
      <!-- 부트스트랩 js참조 -->
      <script src="js/bootstrap.js"></script>
      <!--개인 디자인-->
      <link rel="stylesheet" href="css/basic.css">
-    
+     <link rel="stylesheet" href="css/map.css">
+     
+     <script src="js/liveLoca.js"></script>
+     
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&display=swap" rel="stylesheet">
-    <style>
-    *{
-        font-family: 'Gothic A1', sans-serif;
-        font-style: italic;
-    }
-
-    a, a:link, a:visited{
-        color: #000; 
-    }
-
-    .here {
-        text-align: left;
-        font-size: 30px;
-        box-sizing: border-box;
-        border-bottom: 1px solid #CCC;
-        margin-top: 30px;
-        margin-left: 4%;
-        margin-right: 4%;
-    }
-
-    .mainBody{
-        margin-top: 50px;
-        margin-bottom: 50px;
-        display: flex;
-        height: 600px;
-    }
-
-    .info {
-        overflow: hidden;
-        width:30%;
-        height:600px;
-        margin-left: 1%;
-        margin-right: 4%;
-        box-sizing: border-box;
-    }
-
-    /* 스크롤바 커스텀 : 폭*/
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
-    /* 스크롤바 커스텀 : 위아래 화살표*/
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
-    }
-    /* 스크롤바 커스텀 : 스크롤바*/
-    ::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background: #ccc;
-    }
-
-    .info-header {
-        overflow: hidden;
-        height: 10%;
-        padding-left: 20px;
-        font-size: 25px;
-        border-bottom: 1px solid cornflowerblue;
-        font-weight: bold
-    }
-
-    .kick-list {
-        list-style: none;
-        width: 100%;
-        height: 90%;
-        padding-left: 0px;
-        overflow-y: scroll;
-        /* 스크롤바숨기기 -IE and Edge
-        -ms-overflow-style: none;
-        Firefox
-        scrollbar-width: none;
-        */
-    }
-    /* 스크롤바숨기기 - Chrome, Safari, Opera
-    .kick-list::-webkit-scrollbar {
-        display: none;
-    }   
-    */
-    .kick-info-list{
-        overflow: hidden;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-right: 15px;
-        box-sizing: border-box;
-        border-bottom: 1px solid #ccc;
-    }
-    .kick-info-list:hover {
-        background-color: #ccc;
-        width: 100%;
-    }
-    .mask {
-        font-size: 15px;
-        float: left;
-        width: 80%;
-    }
-    .kick-img {
-        width: 20%;
-        float: right;
-    }
-
-
-    .kick-info-detail{
-        display: none;
-        overflow: hidden;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-right: 15px;
-        box-sizing: border-box;
-        border-bottom: 1px solid #ccc;
-        width: 100%;
-    }
-    .detail-fix{
-        display: inline-block;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    .detail-info{
-        font-size: 15px;
-        float: left;
-        width: 70%;
-    }
-    .detail-img{
-        width: 30%;
-        float: right;
-    }
-
-    .spec {
-        width: 100%;
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-        border-bottom: 0.5px solid cornflowerblue;
-    }
-
-    .btn-signature1 {
-        background-color: cornflowerblue;
-        color: white;
-        box-sizing: border-box;
-        margin-left: 1%;
-        width: 47%;
-    }
-    .btn-signature2 {
-        background-color:  rgb(171, 188, 227);
-        color: white;
-        box-sizing: border-box;
-        margin-right: 1%;
-        width: 47%;
-    }
-
-    </style>
+     
 </head>
 <body>
 
@@ -191,31 +47,35 @@
             <!-- 지도 js -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4306199893f86fa673fc035ff7b9639a"></script>
     <script>
+        // (function(){
+        //     getFetch();
+        // })();
         var markers = [];
-
+        
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-        mapOption = { 
+            mapOption = { 
             center: new kakao.maps.LatLng(37.497935, 127.027556), // 지도의 중심좌표
             level: 3 // 지도의 확대 레벨
         };
-
+        
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
         
         // 마커를 표시할 위치와 title 객체 배열입니다 
+        //getFetch();
         var positions = [
-                {
-                    title: 'list1', 
-                    latlng: new kakao.maps.LatLng(37.499607, 127.030437)
-                },
-                {
-                    title: 'list2', 
-                    latlng: new kakao.maps.LatLng(37.498464, 127.028678)
-                },
-                {
-                    title: 'list3', 
-                    latlng: new kakao.maps.LatLng(37.497268, 127.027321)
-                },
-            ];
+            {
+                title: 'list1', 
+                latlng: new kakao.maps.LatLng(37.499607, 127.030437)
+            },
+            {
+                title: 'list2', 
+                latlng: new kakao.maps.LatLng(37.498464, 127.028678)
+            },
+            {
+                title: 'list3', 
+                latlng: new kakao.maps.LatLng(37.497268, 127.027321)
+            },
+        ];
             selectedMarker = null;
         // 마커 이미지의 이미지 주소입니다
         var imageNormal ="https://i1.daumcdn.net/dmaps/apis/n_local_blit_04.png";
@@ -279,7 +139,7 @@
 
                 // 클릭된 마커가 없고, mouseout된 마커가 클릭된 마커가 아니면
                 // 마커의 이미지를 기본 이미지로 변경합니다
-                if (!selectedMarker || selectedMarker !== marker) {
+                if (!selectedMarker || selectedMarker !== marker || selectedMarker.getImage()!==clickImage) {
                     marker.setImage(normalImage);
                 }
             });
@@ -289,7 +149,7 @@
                 clickMark(marker);
                 //getKickList(marker.Fb);                
             });
-            console.log(marker);
+            //console.log(marker);
             markers.push(marker);  // 배열에 생성된 마커를 추가합니다
             return marker;
         }
@@ -516,7 +376,6 @@
     <script>
         $(document).ready(function(data) {
             
-            console.log(markers);
             // map[]값찾는거
             //for (var [key, value] of markerPosition) {
             // console.log(key + " goes " + value.title);
