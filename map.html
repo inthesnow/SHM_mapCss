@@ -47,36 +47,34 @@
             <!-- 지도 js -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4306199893f86fa673fc035ff7b9639a"></script>
     <script>
-        // (function(){
-        //     getFetch();
-        // })();
+        
         var markers = [];
         
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = { 
-            center: new kakao.maps.LatLng(37.497935, 127.027556), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
+            center: new kakao.maps.LatLng(37.54920197, 126.92320251), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
         };
         
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
         
         // 마커를 표시할 위치와 title 객체 배열입니다 
-        //getFetch();
-        var positions = [
-            {
-                title: 'list1', 
-                latlng: new kakao.maps.LatLng(37.499607, 127.030437)
-            },
-            {
-                title: 'list2', 
-                latlng: new kakao.maps.LatLng(37.498464, 127.028678)
-            },
-            {
-                title: 'list3', 
-                latlng: new kakao.maps.LatLng(37.497268, 127.027321)
-            },
-        ];
+        // var positions = [
+        //     {
+        //         title: 'list1', 
+        //         latlng: new kakao.maps.LatLng(37.499607, 127.030437)
+        //     },
+        //     {
+        //         title: 'list2', 
+        //         latlng: new kakao.maps.LatLng(37.498464, 127.028678)
+        //     },
+        //     {
+        //         title: 'list3', 
+        //         latlng: new kakao.maps.LatLng(37.497268, 127.027321)
+        //     },
+        // ];
             selectedMarker = null;
+        
         // 마커 이미지의 이미지 주소입니다
         var imageNormal ="https://i1.daumcdn.net/dmaps/apis/n_local_blit_04.png";
             imageClick = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
@@ -89,18 +87,16 @@
         //         title : positions.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         //         image : normalImage // 마커 이미지 
         //     });
-        var markerPosition = new Map();
         
-        for (var i = 0; i < positions.length; i ++) {
+        // 마커 이미지의 이미지 크기 입니다
+        var markerSize = new kakao.maps.Size(24, 35);
+            overMarkerSize = new kakao.maps.Size(36, 42);
+
+        // for (var i = 0; i < positions.length; i ++) {
             
-            // 마커 이미지의 이미지 크기 입니다
-            var markerSize = new kakao.maps.Size(24, 35);
-                overMarkerSize = new kakao.maps.Size(36, 42);
 
-            addMarker(positions[i], markerSize, overMarkerSize);
-
-            markerPosition.set(i, positions[i]);
-        }
+        //     addMarker(positions[i], markerSize, overMarkerSize);
+        // }
         
         // 기본 마커이미지, 오버 마커이미지, 클릭 마커이미지를 생성합니다  
         var normalImage = overMarkerImage(markerSize),
@@ -108,7 +104,7 @@
             clickImage = createMarkerImage(markerSize);
         //var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
         
-        function addMarker(position, markerSize, overMarkerSize) {
+        function addMarker(position) {
             normalImage = overMarkerImage(markerSize),
             overImage = overMarkerImage(overMarkerSize),
             clickImage = createMarkerImage(markerSize);
@@ -116,8 +112,8 @@
             // 마커를 생성하고 이미지는 기본 마커 이미지를 사용합니다
             var marker = new kakao.maps.Marker({
                 map: map, // 마커를 표시할 지도
-                position: positions[i].latlng, // 마커를 표시할 위치
-                title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                position: position.latlng, // 마커를 표시할 위치
+                title : position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
                 image : normalImage // 마커 이미지 
             });
 
@@ -165,17 +161,16 @@
                 // 현재 클릭된 마커의 이미지는 클릭 이미지로 변경합니다
                 
                 marker.setImage(clickImage);
-                getKickList(marker.Fb);
+                //getKickList(marker.Fb);
             } else if(selectedMarker){
                 if(marker.getImage()==clickImage) {
                     marker.setImage(normalImage);
                 } else {
                     marker.setImage(clickImage);
                 }
-                getKickList(marker.Fb);
             }
-
-                    // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+            getKickList(marker.Fb);
+            // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
             selectedMarker = marker;
             
 
@@ -214,17 +209,17 @@
             //maker.Fb = list + i
             var size = $("#kick-list").find("li").length;
             var leng = list.substring(4, list.length);
-
-            if($('#detail'+leng).css("display") == "none"){   
+            var l= ++leng;
+            if($('#detail'+l).css("display") == "none"){   
                 for(var j=1;j<=size;j++){
-                    if(leng==j){
+                    if(l==j){
                         jQuery('#detail'+j).slideDown(50);
                     } else {
                         jQuery('#detail'+j).slideUp(50);
                     }
                 }
             } else {
-                jQuery('#detail'+leng).slideUp(50);
+                jQuery('#detail'+l).slideUp(50);
             }
         }
         
@@ -376,17 +371,12 @@
     <script>
         $(document).ready(function(data) {
             
-            // map[]값찾는거
-            //for (var [key, value] of markerPosition) {
-            // console.log(key + " goes " + value.title);
-            // }
             var size = $("#kick-list").find("li").length;
 
             for(var i=1;i<=size;i++){
                 (function(i) {
                     $('#list'+i).click(function(){
                         clickMark(markers[i-1]);
-                        //clickMark(marker);
 
                         //if("list"+i==)
                         // if($('#detail'+i).css("display") == "none"){   

@@ -15,15 +15,18 @@ function getFetch() {
                 .then(function(data){
                     var list = data["rentBikeStatus"]["row"];
                     //console.log(list);
-                    var loca_X = [];
-                    var loca_Y = [];
                     for(var i=0;i<list.length;i++){
-                        loca_X[i] = list[i].stationLatitude; 
-                        loca_Y[i] = list[i].stationLongitude;
+                        position = {
+                            title: 'list'+i, 
+                            latlng: new kakao.maps.LatLng(list[i].stationLatitude, list[i].stationLongitude)
+                        }
+                    
+                        addMarker(position);
+
                     }
-                    console.log(loca_Y+" "+loca_X);
                 })
 }
 (function(){
             getFetch();
+            
 })();
